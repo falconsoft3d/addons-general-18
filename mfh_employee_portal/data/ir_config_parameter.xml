@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="portal_parameter_distance_km" model="ir.config_parameter">
+        <field name="key">portal.parameter.distance.km</field>
+        <field name="value">1</field>
+    </record>
+</odoo>

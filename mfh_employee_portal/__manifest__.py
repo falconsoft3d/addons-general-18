@@ -10,7 +10,7 @@ Allows users to configure
     """,
     'category': 'Accounting/Accounting',
     'website': 'https://www.marlonfalcon.com',
-    'depends': ['base','hr','project'],
+    'depends': ['base','hr','project','hr_attendance'],
     'category': 'Extra Tools',
     'auto_install': False,
     'data': [
@@ -27,6 +27,7 @@ Allows users to configure
         'security/ir.model.access.csv',
         'views/menu_views.xml',
         'data/ir_sequence.xml',
+        'data/ir_config_parameter.xml',
     ],
     'license': 'LGPL-3',
 }

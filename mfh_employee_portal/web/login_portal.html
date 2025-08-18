@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+  <form id="loginForm">
+    <h2 class="h5 mb-3 fw-normal" style="text-align: center;">INSERTAR CÓDIGO DE USUARIO</h2>
+    <input type="hidden" id="csrf_token" value="{{csrf_token}}"/>
+    <div class="form-floating">
+      <input type="text" class="form-control" id="portal_pass">
+      <label for="portal_pass">Código</label>
+    </div>
+    <button class="btn btn-primary w-100 py-2 mt-2" id="portal_enter"
+            onclick="btnEnter()">Iniciar</button>
+
+    <div class="text-center mt-2">
+        <p class="mute" style="margin-bottom: 0;">Usamos la Ubicación para Geolocalizarte:</p>
+        <p style="margin-bottom: 0;"><strong>Latitud:</strong> <spam id="text_lat"></spam></p>
+        <p style="margin-bottom: 0;"><strong>Longitud:</strong> <spam id="text_log"></spam></p>
+    </div>
+
+
+    <script>
+    // Función para obtener la ubicación del usuario
+    function getLocation() {
+        console.log("== Begin GetLocation ==")
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var lat = position.coords.latitude;
+                var lon = position.coords.longitude;
+                $('#text_lat').text(lat);
+                $('#text_log').text(lon);
+            });
+        } else {
+            $('#loginForm').append('<div class="alert alert-danger mt-2" role="alert" id="error">La geolocalización no esta activa</div>');
+        }
+         console.log("== End GetLocation ==")
+    }
+
+    // Llamos la funcion de geolocalización al cargar la página
+    getLocation();
+
+
+    function btnEnter() {
+            console.log("== Begin loginUser ==")
+            event.preventDefault();
+            jQuery('#error').remove();
+            var password = $("#portal_pass").val();
+            var csrf_token = $('#csrf_token').val();
+
+            $.ajax({
+                url: '/portal/login/check',
+                method: 'post',
+                timeout: 0,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: `{
+                                "params": {
+                                    "csrt_token": "${csrf_token}",
+                                    "password": "${password}"
+                                }
+                            }`,
+                success: function(response) {
+                    if (response.result.status == "ok") {
+                        url_in = "/portal/entrar/" + response.result.token;
+                        url_out = "/portal/salir/" + response.result.token;
+                        var url = response.result.login == "1" ? url_in : url_out;
+                        window.location.href = url;
+                    } else {
+                        $('#loginForm').append('<div class="alert alert-danger mt-2" role="alert" id="error">Error en credenciales</div>');
+                    }
+
+                },
+                  error: function(jqXHR, textStatus, errorThrown) {
+                      console.error("Error");
+                  }
+                });
+
+            console.log("== End loginUser ==")
+      }
+    </script>
+
+
+  </form>
+{% endblock %}
