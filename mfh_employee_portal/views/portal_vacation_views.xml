@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_form_portal_vacation" model="ir.ui.view">
+            <field name="name">view.form.portal.vacation</field>
+            <field name="model">portal.vacation</field>
+            <field name="arch" type="xml">
+                <form string="Vacations">
+                    <header>
+                         <button name="action_request" invisible="state in ('draft', 'requested')"
+                                 string="Request" type="object"  class="oe_highlight" data-hotkey="r"/>
+                         <button name="action_approve" invisible="state != 'requested'" string="Approve" type="object"  class="oe_highlight" data-hotkey="a"/>
+                         <button name="action_decline" invisible="state != 'requested'" string="Decline" type="object"  class="oe_highlight" data-hotkey="d"/>
+                         <button name="action_to_draft" invisible="state != 'requested'" string="To Draft" type="object"  data-hotkey="a"/>
+                         <field name="state" widget="statusbar"/>
+                    </header>
+
+
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="General">
+                                <field name="date_from" readonly="state != 'draft'"/>
+                                <field name="date_to" readonly="state != 'draft'"/>
+                                <field name="reason" readonly="state != 'draft'"/>
+                            </group>
+                            <group string="Document">
+                                <field name="user_id" readonly="state != 'draft'"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_list_portal_vacation" model="ir.ui.view">
+            <field name="name">view.tree.portal.vacation</field>
+            <field name="model">portal.vacation</field>
+            <field name="arch" type="xml">
+                <list string="Portal vacation"  open_form_view="True">
+                    <field name="name" optional="show"/>
+                    <field name="date_to"  optional="show"/>
+                    <field name="date_to"  optional="show"/>
+                    <field name="user_id"  optional="show"/>
+                    <field name="state" widget="badge"
+                           decoration-success="state == 'approved'"
+                           decoration-warning="state == 'rejected'"
+                           decoration-info="state == 'requested'"
+                           decoration-danger="state == 'draft'" optional="show" />
+                </list>
+            </field>
+        </record>
+
+        <record id="action_portal_vacation" model="ir.actions.act_window">
+            <field name="name">Vacation</field>
+            <field name="res_model">portal.vacation</field>
+            <field name="view_mode">list,form</field>
+            <field name="view_id" ref="view_list_portal_vacation"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create a new vacation!
+                </p></field>
+        </record>
+
+    </data>
+</odoo>

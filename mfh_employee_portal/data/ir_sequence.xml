@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+
+    <!-- portal.documentation -->
+    <record id="seq_portal_documentation" model="ir.sequence">
+        <field name="name">Portal Documentation</field>
+        <field name="code">portal.documentation</field>
+        <field name="prefix">PDO</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!-- portal.photo -->
+    <record id="seq_portal_photo" model="ir.sequence">
+        <field name="name">Portal Photo</field>
+        <field name="code">portal.photo</field>
+        <field name="prefix">PPH</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!-- portal.improvement -->
+    <record id="seq_portal_improvement" model="ir.sequence">
+        <field name="name">Portal Improvement</field>
+        <field name="code">portal.improvement</field>
+        <field name="prefix">PIM</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!-- portal.vacation -->
+    <record id="seq_portal_vacation" model="ir.sequence">
+        <field name="name">Portal Vacation</field>
+        <field name="code">portal.vacation</field>
+        <field name="prefix">PVA</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!-- portal.complaint -->
+    <record id="seq_portal_complaint" model="ir.sequence">
+        <field name="name">Portal Complaint</field>
+        <field name="code">portal.complaint</field>
+        <field name="prefix">PCO</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+
+</odoo>

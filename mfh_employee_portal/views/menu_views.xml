@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_employee_portal"
+                  name="Portal"
+                  parent="project.menu_main_pm" sequence="40">
+
+            <menuitem id="menu_employee_portal_documentation"
+                  name="Documentations"
+                  action="mfh_employee_portal.action_portal_documentation" />
+
+            <menuitem id="menu_employee_portal_photo"
+                  name="Photos"
+                  action="mfh_employee_portal.action_portal_photo" />
+
+            <menuitem id="menu_employee_portal_improvement"
+                    name="Improvements"
+                    action="mfh_employee_portal.action_portal_improvement" />
+
+            <menuitem id="menu_employee_portal_vacation"
+                    name="Vacations"
+                    action="mfh_employee_portal.action_portal_vacation" />
+
+            <menuitem id="menu_employee_portal_complaint"
+                    name="Complaints"
+                    action="mfh_employee_portal.action_portal_complaint" />
+
+        </menuitem>
+    </data>
+</odoo>

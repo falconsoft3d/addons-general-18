@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_inherit_project_project_portal_form" model="ir.ui.view">
+        <field name="name">view.inherit_project_project.portal.form</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+
+
+            <div name="button_box" position="inside">
+                    <!-- portal.documentation -->
+                    <button name="action_view_portal_documentation" type="object" class="oe_stat_button" icon="fa-file-text">
+                                <field name="portal_documentation_count" widget="statinfo" string="Documentations"/>
+                    </button>
+                    <!-- portal.photo -->
+                    <button name="action_view_portal_photo" type="object" class="oe_stat_button" icon="fa-image">
+                                <field name="portal_photo_count" widget="statinfo" string="Photos"/>
+                    </button>
+
+                    <!-- portal.improvement -->
+                    <button name="action_view_portal_improvement" type="object" class="oe_stat_button" icon="fa-lightbulb-o">
+                                <field name="portal_improvement_count" widget="statinfo" string="Improvements"/>
+                    </button>
+            </div>
+
+
+            <notebook position="inside">
+                <page name="Portal">
+                    <group>
+                        <group name="General">
+                            <field name="use_geolocation"/>
+                        </group>
+                        <group name="Position">
+                                <field name="latitude"/>
+                                 <field name="longitude"/>
+                        </group>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>

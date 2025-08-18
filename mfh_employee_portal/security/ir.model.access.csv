@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_portal_documentation,portal.documentation,model_portal_documentation,,1,1,1,1
+access_portal_photo,portal.photo,model_portal_photo,,1,1,1,1
+access_portal_improvement,portal.improvement,model_portal_improvement,,1,1,1,1
+access_portal_vacation,portal.vacation,model_portal_vacation,,1,1,1,1
+access_portal_complaint,portal.complaint,model_portal_complaint,,1,1,1,1

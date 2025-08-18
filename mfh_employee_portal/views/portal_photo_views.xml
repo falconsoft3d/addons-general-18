@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_form_portal_photo" model="ir.ui.view">
+            <field name="name">view.form.portal.photo</field>
+            <field name="model">portal.photo</field>
+            <field name="arch" type="xml">
+                <form string="Documents">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="General">
+                                <field name="title"/>
+                                <field name="photo"/>
+                            </group>
+                            <group string="Document">
+                                <field name="project_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_list_portal_photo" model="ir.ui.view">
+            <field name="name">view.tree.portal.photo</field>
+            <field name="model">portal.photo</field>
+            <field name="arch" type="xml">
+                <list string="Portal photo"  open_form_view="True">
+                    <field name="name" optional="show"/>
+                    <field name="title" optional="show" />
+                    <field name="project_id" optional="show"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_portal_photo" model="ir.actions.act_window">
+            <field name="name">Photo</field>
+            <field name="res_model">portal.photo</field>
+            <field name="view_mode">list,form</field>
+            <field name="view_id" ref="view_list_portal_photo"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create a new Photo!
+                </p></field>
+        </record>
+
+    </data>
+</odoo>

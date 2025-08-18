@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_inherit_hr_employee_portal_form" model="ir.ui.view">
+        <field name="name">view.inherit.hr.employee.portal.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page name="Portal">
+                    <group>
+                        <group>
+                            <field name="attendance_password"/>
+                            <field name="active_login"/>
+                            <field name="last_password_update" readonly="1"/>
+                            <field name="token" readonly="1"/>
+                        </group>
+                        <group>
+                            <button name="action_crate_password"
+                                    icon="fa-key"
+                                    type="object" string="Crear" class="oe_highlight"/>
+                        </group>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>
