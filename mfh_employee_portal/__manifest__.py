@@ -22,6 +22,7 @@ Allows users to configure
         'views/portal_improvement_views.xml',
         'views/portal_vacation_views.xml',
         'views/portal_complaint_views.xml',
+        'views/hr_attendance_views.xml',
 
 
         'security/ir.model.access.csv',

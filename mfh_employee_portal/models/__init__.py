@@ -6,3 +6,4 @@ from . import portal_photo
 from . import portal_improvement
 from . import portal_vacation
 from . import portal_complaint
+from . import hr_attendance

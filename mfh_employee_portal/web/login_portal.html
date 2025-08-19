@@ -43,8 +43,16 @@
             console.log("== Begin loginUser ==")
             event.preventDefault();
             jQuery('#error').remove();
+
             var password = $("#portal_pass").val();
             var csrf_token = $('#csrf_token').val();
+
+            var lat = $('#text_lat').text();
+            var lon = $('#text_log').text();
+
+
+            console.log("lat: " + lat);
+            console.log("lon: " + lon);
 
             $.ajax({
                 url: '/portal/login/check',
@@ -56,14 +64,14 @@
                 data: `{
                                 "params": {
                                     "csrt_token": "${csrf_token}",
-                                    "password": "${password}"
+                                    "password": "${password}",
+                                    "latitude": "${lat}",
+                                    "longitude": "${lon}"
                                 }
                             }`,
                 success: function(response) {
                     if (response.result.status == "ok") {
-                        url_in = "/portal/entrar/" + response.result.token;
-                        url_out = "/portal/salir/" + response.result.token;
-                        var url = response.result.login == "1" ? url_in : url_out;
+                        var url = "/portal/dashboard/" + response.result.token;
                         window.location.href = url;
                     } else {
                         $('#loginForm').append('<div class="alert alert-danger mt-2" role="alert" id="error">Error en credenciales</div>');

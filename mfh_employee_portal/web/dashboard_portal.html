@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% block content %}
+  <form id="loginForm">
+
+    <h3 class="h5 mb-3 fw-normal" style="text-align: center;">{{employee.name}}</h3>
+    <input type="hidden" id="csrf_token" value="{{csrf_token}}"/>
+    <input type="hidden" id="token" value="{{token}}"/>
+
+   <select class="form-select" id="project">
+        <option value="0">Seleccionar proyecto ...</option>
+         {% for project in projects %}
+          <option value="{{ project.id }}">{{ project.name }}</option>
+        {% endfor %}
+   </select>
+
+
+     </form>
+
+    <script>
+        function btnGeo() {
+            console.log("== Begin btnGeo ==")
+
+            // portal_geo le pongo una etiqueta cargado...
+            $('#portal_geo').html('Cargando...');
+
+            event.preventDefault();
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var lat = position.coords.latitude;
+                    var lon = position.coords.longitude;
+                    var token = $('#token').val();
+                    var project = $("#project").val();
+
+                    console.log("lat: " + lat)
+                    console.log("lon: " + lon)
+                    console.log("token: " + token)
+
+                    if (project == 0) {
+                            $('#loginForm').append('<div class="alert alert-danger mt-2" role="alert" id="error">Seleccione un Proyecto</div>');
+                            return
+                        }
+                    $.ajax({
+                            url: '/asistencia/position/check',
+                            method: 'post',
+                            timeout: 0,
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                    data: `{
+                                "params": {
+                                    "token": "${token}",
+                                    "latitude": "${lat}",
+                                    "longitude": "${lon}",
+                                    "proyect": "${project}"
+                                }
+                            }`,
+                success: function(response) {
+                    if (response.result.status == "ok") {
+                        $('#portal_geo').hide();
+                        $('#div_enter').show();
+                    } else {
+                        $('#loginForm').append('<div class="alert alert-danger mt-2" role="alert" id="error">Error en credenciales</div>');
+                    }
+
+                },
+                  error: function(jqXHR, textStatus, errorThrown) {
+                      console.error("Error");
+                  }
+                });
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+            console.log("== End btnGeo ==")
+
+            $('#portal_geo').html('Entrar');
+        }
+    </script>
+
+        <!-- if tengo hr_attendance_id muestro salir y oculto entrar -->
+
+        {% if hr_attendance_id.id == False %}
+            <button class="btn btn-primary w-100 py-2 mt-2" id="id_btn_enter" onclick="btnEnter()">Entrar</button>
+        {% else %}
+            <button class="btn btn-danger w-100 py-2 mt-2" id="id_btn_exit" onclick="btnExit()">Salir</button>
+        {% endif %}
+
+
+        <button class="btn btn-secondary w-100 py-2 mt-2" id="documentation" onclick="btnGeo()">Documentación</button>
+        <button class="btn btn-secondary w-100 py-2 mt-2" id="photo" onclick="btnGeo()">Fotos</button>
+        <button class="btn btn-secondary w-100 py-2 mt-2" id="vacation" onclick="btnGeo()">Vacaciones</button>
+        <button class="btn btn-secondary w-100 py-2 mt-2" id="improvement" onclick="btnGeo()">Mejoras</button>
+        <button class="btn btn-secondary w-100 py-2 mt-2" id="complaint" onclick="btnGeo()">Denuncias</button>
+
+
+        <a  href="/portal/"  class="btn w-100" id="viajes">Inicio</a>
+
+
+    <br/>
+
+    <script>
+
+    function btnEnter() {
+            console.log("== Begin btnEnter ==")
+
+            event.preventDefault();
+            jQuery('#error').remove();
+            var csrf_token = $('#csrf_token').val();
+            var token = $('#token').val();
+            var project = $("#project").val();
+            var url = '/portal/post/register';
+
+
+
+            console.log("project: " + project)
+            console.log("url: " + url)
+
+            if (project == 0) {
+                $('#loginForm').append('<div class="alert alert-danger mt-2" role="alert" id="error">Seleccione un Proyecto</div>');
+                return
+            }
+
+
+            $.ajax({
+                url: url,
+                method: 'post',
+                timeout: 0,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: `{
+                                "params": {
+                                    "csrt_token": "${csrf_token}",
+                                    "token": "${token}",
+                                    "project": "${project}"
+                                }
+                            }`,
+
+                success: function(response) {
+                    console.log(response.result.status)
+                    if (response.result.status == "ok") {
+                        window.location.href = "/portal/dashboard/" + response.result.token;
+                        // alert("Login correcto")
+                    } else {
+                        alert("Login incorrecto")
+                    }
+
+                },
+                  error: function(jqXHR, textStatus, errorThrown) {
+                      console.error("Error en la llamada al servidor");
+                  }
+            });
+
+            console.log("== End btnEnter ==")
+      }
+
+    function btnExit() {
+            console.log("== Begin btnExit ==")
+
+            event.preventDefault();
+            jQuery('#error').remove();
+            var csrf_token = $('#csrf_token').val();
+            var token = $('#token').val();
+            var url = '/portal/post/exit';
+
+            console.log("url: " + url)
+
+            $.ajax({
+                url: url,
+                method: 'post',
+                timeout: 0,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: `{
+                                "params": {
+                                    "csrt_token": "${csrf_token}",
+                                    "token": "${token}"
+                                }
+                            }`,
+
+                success: function(response) {
+                    console.log(response.result.status)
+                    if (response.result.status == "ok") {
+                        window.location.href = "/portal/";
+                        // alert("Login correcto")
+                    } else {
+                        alert("Login incorrecto")
+                    }
+
+                },
+                  error: function(jqXHR, textStatus, errorThrown) {
+                      console.error("Error en la llamada al servidor");
+                  }
+            });
+
+            console.log("== End btnExit ==")
+      }
+    </script>
+
+{% endblock %}
